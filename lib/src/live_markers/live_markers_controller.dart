@@ -1,3 +1,5 @@
+library flutter_map_hemend.live_markers;
+
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';

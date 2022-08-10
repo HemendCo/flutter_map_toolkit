@@ -1,6 +1,5 @@
+library flutter_map_hemend.directions;
 // ignore_for_file: implementation_imports
-
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,8 +7,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map/src/map/map.dart';
 import 'package:latlong2/latlong.dart';
 
-import 'package:flutter_map_hemend/src/core/extensions.dart';
-import 'package:flutter_map_hemend/src/direction/direction_provider.dart';
+import 'direction_provider.dart';
 
 class DirectionsPlugin extends MapPlugin {
   @override

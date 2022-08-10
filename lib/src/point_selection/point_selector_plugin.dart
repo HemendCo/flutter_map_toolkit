@@ -1,13 +1,37 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_map/plugin_api.dart';
-import 'package:flutter_map_hemend/src/point_selection/point_selector_controller.dart';
+library flutter_map_hemend.point_selector;
 
-import 'package:flutter_map_hemend/src/point_selection/point_selector_options.dart';
+import 'package:flutter/material.dart' //
+    show
+        Center,
+        GestureDetector,
+        Widget;
+import 'package:flutter_bloc/flutter_bloc.dart' //
+    show
+        BlocBuilder;
+import 'package:flutter_map/plugin_api.dart' //
+    show
+        LayerOptions,
+        MapPlugin,
+        MapState,
+        Marker,
+        MarkerLayerOptions,
+        MarkerLayerWidget;
+import 'package:latlong2/latlong.dart' //
+    show
+        LatLng;
 
-import 'package:latlong2/latlong.dart';
+import 'package:flutter_map_hemend/src/point_selection/point_selector_controller.dart' //
+    show
+        CenterPointSelectorController,
+        MapLocatorLayerState;
+import 'package:flutter_map_hemend/src/point_selection/point_selector_options.dart' //
+    show
+        CenterPointSelectorOptions,
+        PointSelectorOptions;
 
-import '../core/point_event_handler.dart';
+import '../core/point_event_handler.dart' //
+    show
+        MapTapEventHandler;
 
 /// A plugin that allows the user to select a point on the map.
 ///

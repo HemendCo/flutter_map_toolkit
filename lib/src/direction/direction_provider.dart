@@ -1,3 +1,5 @@
+library flutter_map_hemend.directions;
+
 import 'package:flutter_map_hemend/src/core/extensions.dart';
 import 'package:latlong2/latlong.dart';
 

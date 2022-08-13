@@ -81,18 +81,46 @@ enum MapboxRouteSelectMode {
 /// - [annotations] : details of each step in the response (default: [])
 /// - [excludeAnnotations] : exclude certain points/events from the response (default: [])
 class MapboxDirectionProvider implements DirectionsProvider {
+  /// base url of the mapbox directions api
   static const baseUrl = 'https://api.mapbox.com/directions/v5/mapbox/';
+
+  /// get request handler for the mapbox api
+  /// this will be used to get the response of the request with given [url]
+  /// return parsed json response of the request
   final Future<Map<String, dynamic>> Function(String url) getRequestHandler;
+
+  /// required token for directions api
   final String mapboxToken;
+
+  /// callback function that will be called when the response of the request is
+  /// received this can be used to provide more information about the direction
   final void Function(Map<String, dynamic>)? onDirectionResult;
+
+  /// target mode of the routing path
   MapboxRouteSelectMode routeSelectMode;
+
+  /// type of the overview geometry in the response (default: 'full')
   MapboxDetailsLevel detailsLevel;
+
+  /// whether to continue straight at waypoints (default: true)
   bool continueStraight;
+
+  /// type of the geometry of the route (default: 'geojson')
   MapboxGeometries geometries;
+
+  /// language of the response (default: 'en')
   String language;
+
+  /// whether to return steps in the response (default: false)
   bool steps;
+
+  /// only use with [steps]=true will return more information with steps
   Set<MapboxDetailsAnnotations> annotations;
+
+  /// exclude certain points from given route
   Set<MapboxExcludeAnnotations> excludeAnnotations;
+
+  /// return alternative routes in the response
   bool alternatives;
 
   /// playground: [https://docs.mapbox.com/playground/directions]
@@ -129,6 +157,7 @@ class MapboxDirectionProvider implements DirectionsProvider {
     this.detailsLevel = MapboxDetailsLevel.full,
     this.routeSelectMode = MapboxRouteSelectMode.driving,
   });
+
   @override
   Future<DirectionProviderResponse> getDirections(
     DirectionsRequest request,
@@ -136,7 +165,7 @@ class MapboxDirectionProvider implements DirectionsProvider {
     final urlBuilder = StringBuffer(baseUrl)
       ..write(routeSelectMode.value)
       ..write(
-        request.routingPoints //
+        request.waypoints //
             .map(
               (e) => '${e.longitude},${e.latitude}',
             )

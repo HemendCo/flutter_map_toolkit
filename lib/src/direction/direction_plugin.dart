@@ -17,7 +17,7 @@ class DirectionsPlugin extends MapPlugin {
     Stream<void> stream,
   ) {
     if (options is DirectionsLayerOptions) {
-      return DirectionsLayer(
+      return _DirectionsLayer(
         options: options,
       );
     }
@@ -30,9 +30,8 @@ class DirectionsPlugin extends MapPlugin {
   }
 }
 
-class DirectionsLayer extends StatelessWidget {
-  const DirectionsLayer({
-    super.key,
+class _DirectionsLayer extends StatelessWidget {
+  const _DirectionsLayer({
     required this.options,
   });
   final DirectionsLayerOptions options;
@@ -53,18 +52,18 @@ class DirectionsLayer extends StatelessWidget {
             builder: (context, snapshot) {
               if (options.useCachedRoute) {
                 options.controller._saveLastPoints(
-                  snapshot.data?.path ?? options.controller.lastPoints,
+                  snapshot.data?.path ?? options.controller.lastPath,
                 );
               } else {
                 options.controller._saveLastPoints(snapshot.data?.path);
               }
               if (snapshot.connectionState == ConnectionState.done || //
-                  options.controller.lastPoints != null) {
-                if (options.controller.lastPoints != null) {
+                  options.controller.lastPath != null) {
+                if (options.controller.lastPath != null) {
                   return PolylineLayerWidget(
                     options: PolylineLayerOptions(polylines: [
                       Polyline(
-                        points: options.controller.lastPoints ?? [],
+                        points: options.controller.lastPath ?? [],
                         strokeWidth: options.pathWidth,
                         color: options.pathColor,
                         borderColor: options.pathStrokeColor,
@@ -115,18 +114,67 @@ class DirectionsLayer extends StatelessWidget {
 ///
 /// [pathGradientStops] is the gradient stops of the path
 class DirectionsLayerOptions extends LayerOptions {
+  /// loading widget builder
   final Widget Function(BuildContext context)? loadingBuilder;
+
+  /// error widget builder can be null if you want to capture error only
   final Widget? Function(BuildContext context, Object? error)? errorBuilder;
+
+  /// controller of direction layer
   final DirectionsLayerController controller;
+
+  /// direction information provider
   final DirectionsProvider provider;
+
+  /// [solid] color of the path
   final Color pathColor;
-  final Color pathStrokeColor;
-  final double strokeWidth;
+
+  /// width of the path
   final double pathWidth;
+
+  /// [solid] color of the path's stroke
+  final Color pathStrokeColor;
+
+  ///  width of the path's stroke
+  final double strokeWidth;
+
+  /// [gradient] colors of the path
   final List<Color>? pathGradientColors;
+
+  /// [gradient] stops of the path
   final List<double>? pathGradientStops;
+
+  /// when requesting for new route if this is true, the plugin will not remove
+  /// the path from the map and show loading instead it will update the path
+  /// after getting the new route
   final bool useCachedRoute;
 
+  /// [provider] is a [DirectionsProvider] that will be used to get the directions
+  /// of selected waypoints
+  ///
+  /// [controller] is a [DirectionsLayerController] that will be used to manage
+  /// the plugin's state and will be used to handle route requests
+  ///
+  /// [useCachedRoute] is a boolean that will be used to determine if the plugin
+  /// should use the cached route or not (if it's true, the plugin will use the
+  /// last cached route, if it's false, the plugin will use loading builder)
+  ///
+  /// [errorBuilder] used to build the error widget when the plugin is in error
+  ///
+  /// [loadingBuilder] used to build the loading widget when the plugin is in load
+  /// state
+  ///
+  /// [pathColor] is the color of the path
+  ///
+  /// [pathStrokeColor] is the color of the path's stroke
+  ///
+  /// [strokeWidth] is the width of the path's stroke
+  ///
+  /// [pathWidth] is the width of the path
+  ///
+  /// [pathGradientColors] is the gradient colors of the path
+  ///
+  /// [pathGradientStops] is the gradient stops of the path
   DirectionsLayerOptions({
     required this.provider,
     required this.controller,
@@ -145,22 +193,28 @@ class DirectionsLayerOptions extends LayerOptions {
 /// [removeDirection] remove path from the map
 ///
 /// [requestDirections] request new path from the provider
-///
-///
 class DirectionsLayerController extends Cubit<_IDirectionCommand> {
-  DirectionsLayerController([
-    super.initialState = _IDirectionCommand.noCommands,
-  ]);
+  /// [removeDirection] remove path from the map
+  ///
+  /// [requestDirections] request new path from the provider
+  DirectionsLayerController() : super(_IDirectionCommand.noCommands);
+
+  /// remove path from the map
   void removeDirection() {
     emit(_IDirectionCommand.removeCommand);
   }
 
+  /// request new path from the provider using [points] as waypoints
   void requestDirections(List<LatLng> points) {
     emit(_IDirectionCommand.requestDirectionFor(points));
   }
 
-  List<LatLng>? lastPoints;
-  void _saveLastPoints(List<LatLng>? points) => lastPoints = points;
+  List<LatLng>? _lastPath;
+
+  /// get last route
+  List<LatLng>? get lastPath => _lastPath;
+
+  void _saveLastPoints(List<LatLng>? points) => _lastPath = points;
 }
 
 class _IDirectionCommand {

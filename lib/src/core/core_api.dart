@@ -6,7 +6,7 @@ export 'distance_info.dart';
 export 'extensions.dart';
 export 'map_information_request_params.dart';
 export 'marker_info.dart';
-export 'point_event_handler.dart';
+export 'map_tap_event_handler.dart';
 export 'point_info.dart';
 export 'point_info_provider.dart';
 export 'type_caster.dart';

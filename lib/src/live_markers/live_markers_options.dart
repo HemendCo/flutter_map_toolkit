@@ -17,7 +17,9 @@ import 'package:flutter_map_toolkit/src/core/point_info_provider.dart';
 /// [initialRefreshRate] is starting refresh rate of the layer
 ///
 /// [pointsInfoProvider] is used to get [PointInfo]s for current viewport
-class LiveMarkerOptionsWithRefreshRate extends LayerOptions with _MarkerInfoProvider {
+class LiveMarkerOptionsWithRefreshRate extends LayerOptions //
+    with
+        _MarkerInfoProvider {
   @override
   final Map<String, MarkerInfo> markers;
 
@@ -65,7 +67,9 @@ class LiveMarkerOptionsWithRefreshRate extends LayerOptions with _MarkerInfoProv
 /// [defaultMarker] is used when no markerId provided to [PointInfo]
 ///
 /// [pointsInfoProvider] is used to get [PointInfo]s for current viewport
-class LiveMarkerOptionsWithStream extends LayerOptions with _MarkerInfoProvider {
+class LiveMarkerOptionsWithStream extends LayerOptions //
+    with
+        _MarkerInfoProvider {
   @override
   final Map<String, MarkerInfo> markers;
   @override

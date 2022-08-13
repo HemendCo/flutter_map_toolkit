@@ -7,7 +7,7 @@ import 'package:latlong2/latlong.dart';
 
 import 'package:flutter_map_toolkit/src/core/marker_info.dart';
 
-import '../core/point_event_handler.dart';
+import '../core/map_tap_event_handler.dart';
 
 /// this class use [MapTapEventHandler] to handle tap events
 ///

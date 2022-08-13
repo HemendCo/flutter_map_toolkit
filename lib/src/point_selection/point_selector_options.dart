@@ -24,8 +24,13 @@ import '../core/point_event_handler.dart';
 class PointSelectorOptions extends LayerOptions {
   final MapTapEventHandler mapPointLink;
   final MarkerInfo marker;
+
+  /// if remove [removeOnTap] is true, the [PointSelectorOptions] must be last
+  /// in the list of [LayerOptions], this is due a limitation of
+  /// `flutter hittests`. this will happen if another layer adds a marker over
+  /// the marker that is being added by this plugin.
   final bool removeOnTap;
-  final void Function(LatLng? point) onPointSelected;
+  final void Function(PointSelectionEvent point) onPointSelected;
   PointSelectorOptions({
     required this.mapPointLink,
     required this.onPointSelected,
@@ -66,4 +71,32 @@ class CenterPointSelectorOptions extends LayerOptions {
             MarkerInfo(
               view: (_) => const Icon(Icons.gps_not_fixed),
             );
+}
+
+enum PointSelectionState {
+  none,
+  select,
+  remove,
+}
+
+class PointSelectionEvent {
+  final LatLng? point;
+  final PointSelectionState state;
+  const PointSelectionEvent({
+    this.point,
+    required this.state,
+  }) : assert(
+          state == PointSelectionState.none || point != null,
+        );
+
+  @override
+  bool operator ==(Object other) {
+    return other is PointSelectionEvent && //
+        other.point?.latitude == point?.latitude && //
+        other.point?.longitude == point?.longitude && //
+        other.state == state;
+  }
+
+  @override
+  int get hashCode => point.hashCode ^ state.hashCode;
 }

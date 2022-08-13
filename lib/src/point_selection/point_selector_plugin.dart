@@ -4,10 +4,12 @@ import 'package:flutter/material.dart' //
     show
         Center,
         GestureDetector,
+        SizedBox,
         Widget;
 import 'package:flutter_bloc/flutter_bloc.dart' //
     show
-        BlocBuilder;
+        BlocBuilder,
+        Cubit;
 import 'package:flutter_map/plugin_api.dart' //
     show
         LayerOptions,
@@ -24,14 +26,13 @@ import 'package:flutter_map_toolkit/src/point_selection/point_selector_controlle
     show
         CenterPointSelectorController,
         MapLocatorLayerState;
-import 'package:flutter_map_toolkit/src/point_selection/point_selector_options.dart' //
+
+import '../../flutter_map_hemend.dart' //
     show
         CenterPointSelectorOptions,
+        PointSelectionEvent,
+        PointSelectionState,
         PointSelectorOptions;
-
-import '../core/point_event_handler.dart' //
-    show
-        MapTapEventHandler;
 
 /// A plugin that allows the user to select a point on the map.
 ///
@@ -63,22 +64,40 @@ class PointSelectorPlugin extends MapPlugin {
     );
   }
 
+  PointSelectorHandler? handler;
   Widget _pointSelectorView(PointSelectorOptions options) {
-    return BlocBuilder<MapTapEventHandler, LatLng?>(
-      bloc: options.mapPointLink,
+    handler = handler ??
+        PointSelectorHandler(
+          tapEvents: options.mapPointLink.stream,
+          listener: options.onPointSelected,
+        );
+
+    return BlocBuilder<PointSelectorHandler, PointSelectionEvent?>(
+      bloc: handler,
       builder: (context, state) {
-        options.onPointSelected(state);
+        if (state == null) {
+          return const SizedBox();
+        }
         return MarkerLayerWidget(
             options: MarkerLayerOptions(
           rebuild: options.rebuild,
           markers: [
-            if (state != null)
+            if (state.state == PointSelectionState.select)
               Marker(
-                point: state,
+                point: state.point!,
                 height: options.marker.viewSize.height,
                 width: options.marker.viewSize.width,
                 builder: (context) => GestureDetector(
-                  onTap: options.removeOnTap ? () => options.mapPointLink.update(null) : null,
+                  onTap: options.removeOnTap
+                      ? () {
+                          handler?.set(
+                            PointSelectionEvent(
+                              state: PointSelectionState.remove,
+                              point: state.point,
+                            ),
+                          );
+                        }
+                      : null,
                   child: options.marker.view(context),
                 ),
               ),
@@ -91,5 +110,24 @@ class PointSelectorPlugin extends MapPlugin {
   @override
   bool supportsLayer(LayerOptions options) {
     return options is PointSelectorOptions || options is CenterPointSelectorOptions;
+  }
+}
+
+class PointSelectorHandler extends Cubit<PointSelectionEvent?> {
+  PointSelectorHandler({
+    required this.tapEvents,
+    required this.listener,
+  }) : super(null) {
+    tapEvents.listen((point) {
+      set(
+        PointSelectionEvent(state: PointSelectionState.select, point: point),
+      );
+    });
+  }
+  final void Function(PointSelectionEvent) listener;
+  final Stream<LatLng?> tapEvents;
+  void set(PointSelectionEvent event) {
+    emit(event);
+    listener(event);
   }
 }

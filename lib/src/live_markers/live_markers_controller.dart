@@ -23,6 +23,15 @@ abstract class LiveMarkersController implements Cubit<MultiMarkerLayerState> {}
 /// [pointInfoProvider] is used to get points information
 class LiveMarkersControllerWithRefreshRate //
     extends Cubit<MultiMarkerLayerState> implements LiveMarkersController {
+  /// this class updates markers with given [refreshRate] per seconds
+  ///
+  /// [refreshRate] is the rate of updating data per seconds
+  ///
+  /// [mapData] is used to find data for current viewport of map
+  ///
+  /// [autoUpdate] is used to active autoUpdater by default
+  ///
+  /// [pointInfoProvider] is used to get points information
   LiveMarkersControllerWithRefreshRate({
     required this.mapData,
     required this.pointInfoProvider,
@@ -41,6 +50,7 @@ class LiveMarkersControllerWithRefreshRate //
       _registerAutoUpdater();
     }
   }
+
   double _refreshRate;
 
   double get refreshRate => _refreshRate;
@@ -50,7 +60,14 @@ class LiveMarkersControllerWithRefreshRate //
   bool get autoUpdate => _autoUpdate;
 
   Timer? _internalTimer;
+
+  /// used to get points information
   PointInfoProvider pointInfoProvider;
+
+  /// activate auto updater with given [updateRate]
+  ///
+  /// if [autoUpdate] field set to true this method will be called automatically
+  /// with given [refreshRate] per seconds
   void activeAutoUpdater([double? updateRate]) {
     if (autoUpdate) {
       _internalTimer?.cancel();
@@ -68,12 +85,13 @@ class LiveMarkersControllerWithRefreshRate //
     );
   }
 
+  /// get points information for current viewport of map using fetch method
   Future<void> update() async {
     if (!mapData.bounds().isValid) {
       return;
     }
 
-    final state = await fetchData(
+    final state = await _fetchData(
       MapInformationRequestParams(
         viewPort: mapData.bounds(),
       ),
@@ -81,9 +99,10 @@ class LiveMarkersControllerWithRefreshRate //
     emit(state);
   }
 
+  /// used to get bounds of the map
   MultiMarkerControllerInfo mapData;
 
-  Future<MultiMarkerLayerState> fetchData(
+  Future<MultiMarkerLayerState> _fetchData(
     MapInformationRequestParams params,
   ) async {
     final points = await pointInfoProvider.getPoints(params);
@@ -104,6 +123,16 @@ class LiveMarkersControllerWithRefreshRate //
 class LiveMarkersControllerWithStream extends Cubit<MultiMarkerLayerState> //
     implements
         LiveMarkersController {
+  /// this class will not update predictably and only updates when new data
+  /// passed through [pointInfoProvider]'s Stream
+  ///
+  /// although this class is not auto updater, it will connect map changes events
+  /// to [pointInfoProvider]'s Stream and if provider is handling map changes events
+  /// it will update accordingly
+  ///
+  /// [mapData] is used to find data for current viewport of map and map events
+  ///
+  /// [pointInfoProvider] is stream provider of points
   LiveMarkersControllerWithStream({
     required this.mapData,
     required this.pointInfoProvider,
@@ -116,7 +145,11 @@ class LiveMarkersControllerWithStream extends Cubit<MultiMarkerLayerState> //
         ) {
     _registerAutoUpdater();
   }
+
+  /// used to get bounds of the map
   MultiMarkerControllerInfoWithStream mapData;
+
+  /// stream provider of points
   PointInfoStreamedProvider pointInfoProvider;
 
   void _registerAutoUpdater() {

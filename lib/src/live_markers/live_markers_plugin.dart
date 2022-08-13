@@ -12,6 +12,7 @@ import 'live_markers_options.dart';
 
 export 'package:flutter_map_toolkit/src/core/marker_info.dart';
 
+/// this class can be used to draw moving markers on the map
 class LiveMarkerPlugin extends MapPlugin {
   LiveMarkersController? _controller;
 

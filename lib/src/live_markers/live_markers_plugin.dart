@@ -56,8 +56,8 @@ class LiveMarkerPlugin extends MapPlugin {
           });
     }
 
-    if (options is LiveMarkerOptionsWithSocket) {
-      _controller ??= LiveMarkersControllerWithSocket(
+    if (options is LiveMarkerOptionsWithStream) {
+      _controller ??= LiveMarkersControllerWithStream(
         pointInfoProvider: options.pointsInfoProvider,
         mapData: MultiMarkerControllerInfoWithStream(
           () => mapState.bounds,
@@ -100,6 +100,6 @@ class LiveMarkerPlugin extends MapPlugin {
 
   @override
   bool supportsLayer(LayerOptions options) {
-    return options is LiveMarkerOptionsWithRefreshRate || options is LiveMarkerOptionsWithSocket;
+    return options is LiveMarkerOptionsWithRefreshRate || options is LiveMarkerOptionsWithStream;
   }
 }

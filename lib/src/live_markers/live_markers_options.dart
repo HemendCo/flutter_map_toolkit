@@ -53,7 +53,7 @@ class LiveMarkerOptionsWithRefreshRate extends LayerOptions {
 /// [defaultMarker] is used when no markerId provided to [PointInfo]
 ///
 /// [pointsInfoProvider] is used to get [PointInfo]s for current viewport
-class LiveMarkerOptionsWithSocket extends LayerOptions {
+class LiveMarkerOptionsWithStream extends LayerOptions {
   final Map<String, MarkerInfo> markers;
   final String defaultMarker;
   final PointInfoStreamedProvider pointsInfoProvider;
@@ -66,7 +66,7 @@ class LiveMarkerOptionsWithSocket extends LayerOptions {
     return element;
   }
 
-  LiveMarkerOptionsWithSocket({
+  LiveMarkerOptionsWithStream({
     required this.pointsInfoProvider,
     required this.markers,
     String? defaultIcon,

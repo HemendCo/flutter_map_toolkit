@@ -91,8 +91,8 @@ class LiveMarkersControllerWithRefreshRate extends Cubit<MultiMarkerLayerState> 
 /// [mapData] is used to find data for current viewport of map and map events
 ///
 /// [pointInfoProvider] is stream provider of points
-class LiveMarkersControllerWithSocket extends Cubit<MultiMarkerLayerState> implements LiveMarkersController {
-  LiveMarkersControllerWithSocket({
+class LiveMarkersControllerWithStream extends Cubit<MultiMarkerLayerState> implements LiveMarkersController {
+  LiveMarkersControllerWithStream({
     required this.mapData,
     required this.pointInfoProvider,
     MultiMarkerLayerState? initialState,

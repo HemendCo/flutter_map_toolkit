@@ -161,30 +161,27 @@ class _MyHomePageState extends State<MyHomePage> {
                       );
                     },
                   ),
-                  CenterPointSelectorOptions(onPointSelected: (point) {}),
+
                   PointSelectorOptions(
                     onPointSelected: onPointSelect,
                     marker: MarkerInfo(
-                      view: (context) => const Icon(
-                        Icons.gps_not_fixed,
-                        color: Colors.red,
-                      ),
+                      view: (context) => SizedBox(),
                     ),
                     removeOnTap: true,
                     mapPointLink: _mapEventTap,
                   ),
 
                   /// draw selected points on map
-                  LiveMarkerOptionsWithStream(
-                    pointsInfoProvider: pointProvider,
-                    markers: {
-                      'm0': MarkerInfo(
-                          view: (_) => Icon(
-                                Icons.gpp_good_sharp,
-                                color: Colors.black.withOpacity(0.2),
-                              )),
-                    },
-                  ),
+                  // LiveMarkerOptionsWithStream(
+                  //   pointsInfoProvider: pointProvider,
+                  //   markers: {
+                  //     'm0': MarkerInfo(
+                  //         view: (_) => Icon(
+                  //               Icons.gpp_good_sharp,
+                  //               color: Colors.black.withOpacity(0.2),
+                  //             )),
+                  //   },
+                  // ),
                 ],
               ),
             ),

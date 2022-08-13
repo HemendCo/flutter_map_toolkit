@@ -1,3 +1,5 @@
+library flutter_map_hemend.core_api;
+
 export 'core_methods.dart';
 export 'debouncer.dart';
 export 'distance_info.dart';

@@ -16,7 +16,11 @@ class LiveMarkerPlugin extends MapPlugin {
   LiveMarkersController? _controller;
 
   @override
-  Widget createLayer(LayerOptions options, MapState mapState, Stream<void> stream) {
+  Widget createLayer(
+    LayerOptions options,
+    MapState mapState,
+    Stream<void> stream,
+  ) {
     if (options is LiveMarkerOptionsWithRefreshRate) {
       _controller ??= LiveMarkersControllerWithRefreshRate(
         pointInfoProvider: options.pointsInfoProvider,
@@ -73,7 +77,9 @@ class LiveMarkerPlugin extends MapPlugin {
                 markers: [
                   ...state.markers.map(
                     (e) {
-                      final marker = options.getMarkerFor(e.iconId ?? options.defaultMarker);
+                      final marker = options.getMarkerFor(
+                        e.iconId ?? options.defaultMarker,
+                      );
                       return Marker(
                         height: marker.viewSize.height,
                         width: marker.viewSize.width,
@@ -100,6 +106,7 @@ class LiveMarkerPlugin extends MapPlugin {
 
   @override
   bool supportsLayer(LayerOptions options) {
-    return options is LiveMarkerOptionsWithRefreshRate || options is LiveMarkerOptionsWithStream;
+    return options is LiveMarkerOptionsWithRefreshRate || //
+        options is LiveMarkerOptionsWithStream;
   }
 }

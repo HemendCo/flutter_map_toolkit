@@ -49,10 +49,18 @@ class MapInformationRequestParams {
   }
 
   factory MapInformationRequestParams.fromMap(Map<String, dynamic> map) {
-    final bounds = boundsFromMap(Map<String, dynamic>.from(map['viewPort'] as Map));
+    final bounds = boundsFromMap(
+      Map<String, dynamic>.from(
+        map['viewPort'] as Map,
+      ),
+    );
     return MapInformationRequestParams(
       viewPort: bounds,
-      center: pointFromMap(asType(map['center'])),
+      center: pointFromMap(
+        asType(
+          map['center'],
+        ),
+      ),
     );
   }
 
@@ -65,13 +73,16 @@ class MapInformationRequestParams {
   }
 
   @override
-  String toString() => 'MapInformationRequestParams(viewPort: $viewPort, center: $center)';
+  String toString() => //
+      'MapInformationRequestParams(viewPort: $viewPort, center: $center)';
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is MapInformationRequestParams && other.viewPort == viewPort && other.center == center;
+    return other is MapInformationRequestParams && //
+        other.viewPort == viewPort &&
+        other.center == center;
   }
 
   @override

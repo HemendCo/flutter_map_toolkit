@@ -68,7 +68,9 @@ class _MyHomePageState extends State<MyHomePage> {
       if (event.point != null) {
         _points.add(event.point!);
         setState(() {
-          distanceInfo = directionController.lastPoints?.distanceToPoint(event.point!);
+          distanceInfo = directionController.lastPoints?.distanceToPoint(
+            event.point!,
+          );
         });
         pointProvider.controller.insert(event.point!);
       }
@@ -243,7 +245,10 @@ class SampleStreamedPointProvider extends PointInfoStreamedProvider {
     'm0',
   ]);
   @override
-  Stream<List<PointInfo>> getPointStream(Stream<MapInformationRequestParams?> params) => controller.stream;
+  Stream<List<PointInfo>> getPointStream(
+    Stream<MapInformationRequestParams?> params,
+  ) =>
+      controller.stream;
 
   @override
   void invoke() {

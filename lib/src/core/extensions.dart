@@ -19,10 +19,16 @@ extension LatLngTools on LatLng {
   /// calculate distance between two points
   ///
   /// distanceMode is unit of result
-  double calculateDistanceTo(LatLng target, {DistanceMode distanceMode = DistanceMode.kilometers}) {
+  double calculateDistanceTo(
+    LatLng target, {
+    DistanceMode distanceMode = DistanceMode.kilometers,
+  }) {
     final deltaLong = target.longitudeInRad - longitudeInRad;
     final deltaLat = target.latitudeInRad - latitudeInRad;
-    final a = pow(sin(deltaLat / 2), 2) + cos(latitudeInRad) * cos(target.latitudeInRad) * pow(sin(deltaLong / 2), 2);
+    final a = pow(sin(deltaLat / 2), 2) + //
+        cos(latitudeInRad) * //
+            cos(target.latitudeInRad) * //
+            pow(sin(deltaLong / 2), 2);
 
     final c = 2 * asin(sqrt(a));
 
@@ -34,10 +40,15 @@ extension LatLngListTools<T extends LatLng> on List<T> {
   /// used to calculate length of a path
   ///
   /// distanceMode is unit of result
-  double calculateLength({DistanceMode distanceMode = DistanceMode.kilometers}) {
+  double calculateLength({
+    DistanceMode distanceMode = DistanceMode.kilometers,
+  }) {
     double distance = 0;
     for (int i = 0; i < length - 1; i++) {
-      distance += this[i].calculateDistanceTo(this[i + 1], distanceMode: distanceMode);
+      distance += this[i].calculateDistanceTo(
+        this[i + 1],
+        distanceMode: distanceMode,
+      );
     }
     return distance;
   }

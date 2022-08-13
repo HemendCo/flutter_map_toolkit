@@ -26,7 +26,9 @@ class LiveMarkerOptionsWithRefreshRate extends LayerOptions {
   MarkerInfo getMarkerFor(String? key) {
     final element = markers[key] ?? markers[defaultMarker];
     if (element == null) {
-      throw Exception('Icon not found for key: $key or even the defaultIcon $defaultMarker');
+      throw Exception(
+        'Icon not found for key: $key or even the defaultIcon $defaultMarker',
+      );
     }
     return element;
   }
@@ -61,7 +63,9 @@ class LiveMarkerOptionsWithStream extends LayerOptions {
   MarkerInfo getMarkerFor(String? key) {
     final element = markers[key] ?? markers[defaultMarker];
     if (element == null) {
-      throw Exception('Icon not found for key: $key or even the defaultIcon $defaultMarker');
+      throw Exception(
+        'Icon not found for key: $key or even the defaultIcon $defaultMarker',
+      );
     }
     return element;
   }

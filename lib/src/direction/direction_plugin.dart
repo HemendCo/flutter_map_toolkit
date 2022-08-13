@@ -11,7 +11,11 @@ import 'direction_provider.dart';
 
 class DirectionsPlugin extends MapPlugin {
   @override
-  Widget createLayer(LayerOptions options, MapState mapState, Stream<void> stream) {
+  Widget createLayer(
+    LayerOptions options,
+    MapState mapState,
+    Stream<void> stream,
+  ) {
     if (options is DirectionsLayerOptions) {
       return DirectionsLayer(
         options: options,
@@ -43,14 +47,19 @@ class DirectionsLayer extends StatelessWidget {
         }
         if (command is _RequestDirectionCommand) {
           return FutureBuilder<DirectionProviderResponse>(
-            future: options.provider.getDirections(DirectionsRequest(command.points)),
+            future: options.provider.getDirections(
+              DirectionsRequest(command.points),
+            ),
             builder: (context, snapshot) {
               if (options.useCachedRoute) {
-                options.controller._saveLastPoints(snapshot.data?.path ?? options.controller.lastPoints);
+                options.controller._saveLastPoints(
+                  snapshot.data?.path ?? options.controller.lastPoints,
+                );
               } else {
                 options.controller._saveLastPoints(snapshot.data?.path);
               }
-              if (snapshot.connectionState == ConnectionState.done || options.controller.lastPoints != null) {
+              if (snapshot.connectionState == ConnectionState.done || //
+                  options.controller.lastPoints != null) {
                 if (options.controller.lastPoints != null) {
                   return PolylineLayerWidget(
                     options: PolylineLayerOptions(polylines: [
@@ -65,9 +74,11 @@ class DirectionsLayer extends StatelessWidget {
                   );
                 }
 
-                return options.errorBuilder?.call(context, snapshot.error) ?? const SizedBox();
+                return options.errorBuilder?.call(context, snapshot.error) ?? //
+                    const SizedBox();
               }
-              return (options.loadingBuilder ?? (_) => const SizedBox())(context);
+              return (options.loadingBuilder ?? //
+                  (_) => const SizedBox())(context);
             },
           );
         }
@@ -157,7 +168,8 @@ class _IDirectionCommand {
   static const noCommands = _NoCommands();
   static const removeCommand = _RemoveDirectionCommand();
   // ignore: prefer_constructors_over_static_methods
-  static _RequestDirectionCommand requestDirectionFor(List<LatLng> points) => _RequestDirectionCommand(points);
+  static _RequestDirectionCommand requestDirectionFor(List<LatLng> points) => //
+      _RequestDirectionCommand(points);
 }
 
 class _NoCommands implements _IDirectionCommand {

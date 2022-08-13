@@ -45,7 +45,11 @@ import '../../flutter_map_hemend.dart' //
 /// without tapping on the map it will be center of the viewport.
 class PointSelectorPlugin extends MapPlugin {
   @override
-  Widget createLayer(LayerOptions options, MapState mapState, Stream<void> stream) {
+  Widget createLayer(
+    LayerOptions options,
+    MapState mapState,
+    Stream<void> stream,
+  ) {
     if (options is PointSelectorOptions) {
       return _pointSelectorView(options);
     }
@@ -55,7 +59,11 @@ class PointSelectorPlugin extends MapPlugin {
     throw Exception('options is not PointSelectorOptions');
   }
 
-  Widget _centerPointSelector(Stream<void> stream, CenterPointSelectorOptions options, MapState mapState) {
+  Widget _centerPointSelector(
+    Stream<void> stream,
+    CenterPointSelectorOptions options,
+    MapState mapState,
+  ) {
     return BlocBuilder<CenterPointSelectorController, MapLocatorLayerState>(
       bloc: CenterPointSelectorController(stream, options, mapState),
       builder: (context, state) {
@@ -109,7 +117,8 @@ class PointSelectorPlugin extends MapPlugin {
 
   @override
   bool supportsLayer(LayerOptions options) {
-    return options is PointSelectorOptions || options is CenterPointSelectorOptions;
+    return options is PointSelectorOptions || //
+        options is CenterPointSelectorOptions;
   }
 }
 

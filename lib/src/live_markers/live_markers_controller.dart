@@ -21,7 +21,8 @@ abstract class LiveMarkersController implements Cubit<MultiMarkerLayerState> {}
 /// [autoUpdate] is used to active autoUpdater by default
 ///
 /// [pointInfoProvider] is used to get points information
-class LiveMarkersControllerWithRefreshRate extends Cubit<MultiMarkerLayerState> implements LiveMarkersController {
+class LiveMarkersControllerWithRefreshRate //
+    extends Cubit<MultiMarkerLayerState> implements LiveMarkersController {
   LiveMarkersControllerWithRefreshRate({
     required this.mapData,
     required this.pointInfoProvider,
@@ -61,7 +62,10 @@ class LiveMarkersControllerWithRefreshRate extends Cubit<MultiMarkerLayerState> 
 
   Future<void> _registerAutoUpdater() async {
     await update();
-    _internalTimer = Timer(Duration(milliseconds: 1000 ~/ refreshRate), _registerAutoUpdater);
+    _internalTimer = Timer(
+      Duration(milliseconds: 1000 ~/ refreshRate),
+      _registerAutoUpdater,
+    );
   }
 
   Future<void> update() async {
@@ -69,13 +73,19 @@ class LiveMarkersControllerWithRefreshRate extends Cubit<MultiMarkerLayerState> 
       return;
     }
 
-    final state = await fetchData(MapInformationRequestParams(viewPort: mapData.bounds()));
+    final state = await fetchData(
+      MapInformationRequestParams(
+        viewPort: mapData.bounds(),
+      ),
+    );
     emit(state);
   }
 
   MultiMarkerControllerInfo mapData;
 
-  Future<MultiMarkerLayerState> fetchData(MapInformationRequestParams params) async {
+  Future<MultiMarkerLayerState> fetchData(
+    MapInformationRequestParams params,
+  ) async {
     final points = await pointInfoProvider.getPoints(params);
     return MultiMarkerLayerState(points);
   }
@@ -91,7 +101,9 @@ class LiveMarkersControllerWithRefreshRate extends Cubit<MultiMarkerLayerState> 
 /// [mapData] is used to find data for current viewport of map and map events
 ///
 /// [pointInfoProvider] is stream provider of points
-class LiveMarkersControllerWithStream extends Cubit<MultiMarkerLayerState> implements LiveMarkersController {
+class LiveMarkersControllerWithStream extends Cubit<MultiMarkerLayerState> //
+    implements
+        LiveMarkersController {
   LiveMarkersControllerWithStream({
     required this.mapData,
     required this.pointInfoProvider,
@@ -109,7 +121,13 @@ class LiveMarkersControllerWithStream extends Cubit<MultiMarkerLayerState> imple
 
   void _registerAutoUpdater() {
     pointInfoProvider
-        .getPointStream(mapData.stream.map((event) => MapInformationRequestParams(viewPort: mapData.bounds())))
+        .getPointStream(
+      mapData.stream.map(
+        (event) => MapInformationRequestParams(
+          viewPort: mapData.bounds(),
+        ),
+      ),
+    )
         .listen(
       (event) {
         emit(

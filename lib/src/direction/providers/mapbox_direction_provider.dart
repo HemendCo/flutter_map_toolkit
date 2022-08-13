@@ -130,10 +130,18 @@ class MapboxDirectionProvider implements DirectionsProvider {
     this.routeSelectMode = MapboxRouteSelectMode.driving,
   });
   @override
-  Future<DirectionProviderResponse> getDirections(DirectionsRequest request) async {
+  Future<DirectionProviderResponse> getDirections(
+    DirectionsRequest request,
+  ) async {
     final urlBuilder = StringBuffer(baseUrl)
       ..write(routeSelectMode.value)
-      ..write(request.routingPoints.map((e) => '${e.longitude},${e.latitude}').join(';'))
+      ..write(
+        request.routingPoints //
+            .map(
+              (e) => '${e.longitude},${e.latitude}',
+            )
+            .join(';'),
+      )
       ..write('?')
       ..write('alternatives=$alternatives')
       ..write('&continue_straight=$continueStraight')
@@ -141,18 +149,41 @@ class MapboxDirectionProvider implements DirectionsProvider {
       ..write('&language=$language')
       ..write('&overview=${detailsLevel.name}')
       ..write('&steps=$steps')
-      ..write(annotations.isNotEmpty ? '&annotations=${annotations.map((e) => e.name).join(',')}' : '')
-      ..write(excludeAnnotations.isNotEmpty ? '&exclude=${excludeAnnotations.map((e) => e.name).join(',')}' : '')
+      ..write(
+        annotations.isNotEmpty
+            ? //
+            '&annotations=${annotations.map((e) => e.name).join(',')}'
+            : '',
+      )
+      ..write(
+        excludeAnnotations.isNotEmpty
+            ? //
+            '&exclude=${excludeAnnotations.map((e) => e.name).join(',')}'
+            : '',
+      )
       ..write('&access_token=$mapboxToken');
     final url = urlBuilder.toString();
 
-    final response = await getRequestHandler(url)
-        .onError((error, stackTrace) => throw Exception('Error while getting directions: $error\n$stackTrace'));
+    final response = await getRequestHandler(url).onError(//
+        (error, stackTrace) => throw Exception(
+              'Error while getting directions: $error\n$stackTrace',
+            ));
     onDirectionResult?.call(response);
 
-    final path = List<Map<String, dynamic>>.from(asType(response['routes'])).first['geometry']['coordinates'];
+    final path = List<Map<String, dynamic>>.from(
+      asType(
+        response['routes'],
+      ),
+    ).first['geometry']['coordinates'];
     final pathList = List<dynamic>.from(asType(path));
-    final pathListLatLng = pathList.map((e) => LatLng(asType(e[1]), asType(e[0])));
+    final pathListLatLng = pathList.map(
+      (e) => LatLng(
+        asType(e[1]),
+        asType(
+          e[0],
+        ),
+      ),
+    );
 
     return DirectionProviderResponse(path: pathListLatLng.toList());
   }

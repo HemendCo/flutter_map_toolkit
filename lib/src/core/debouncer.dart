@@ -24,7 +24,11 @@ class Debounce {
   ///
   /// If [duration] is `Duration.zero`, [onExecute] will be executed immediately, i.e.
   /// synchronously.
-  static void debounce(String tag, Duration duration, DebounceCallback onExecute) {
+  static void debounce(
+    String tag,
+    Duration duration,
+    DebounceCallback onExecute,
+  ) {
     if (duration == Duration.zero) {
       _operations[tag]?.timer.cancel();
       _operations.remove(tag);

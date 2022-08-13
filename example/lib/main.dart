@@ -161,6 +161,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       );
                     },
                   ),
+                  CenterPointSelectorOptions(onPointSelected: (point) {}),
                   PointSelectorOptions(
                     onPointSelected: onPointSelect,
                     marker: MarkerInfo(

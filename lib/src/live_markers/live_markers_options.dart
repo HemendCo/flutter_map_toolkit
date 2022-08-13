@@ -1,8 +1,8 @@
-library flutter_map_hemend.live_markers;
+library flutter_map_toolkit.live_markers;
 
 import 'package:flutter_map/plugin_api.dart';
-import 'package:flutter_map_hemend/src/core/marker_info.dart';
-import 'package:flutter_map_hemend/src/core/point_info_provider.dart';
+import 'package:flutter_map_toolkit/src/core/marker_info.dart';
+import 'package:flutter_map_toolkit/src/core/point_info_provider.dart';
 
 /// Options for [LiveMarkerPlugin] layer.
 ///

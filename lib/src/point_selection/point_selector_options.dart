@@ -1,11 +1,11 @@
-library flutter_map_hemend.point_selector;
+library flutter_map_toolkit.point_selector;
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:latlong2/latlong.dart';
 
-import 'package:flutter_map_hemend/src/core/marker_info.dart';
+import 'package:flutter_map_toolkit/src/core/marker_info.dart';
 
 import '../core/point_event_handler.dart';
 

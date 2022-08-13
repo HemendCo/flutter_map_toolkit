@@ -1,6 +1,6 @@
-library flutter_map_hemend.directions;
+library flutter_map_toolkit.directions;
 
-import 'package:flutter_map_hemend/src/core/extensions.dart';
+import 'package:flutter_map_toolkit/src/core/extensions.dart';
 import 'package:latlong2/latlong.dart';
 
 /// a provider must have [getDirections] methods with the following parameters:

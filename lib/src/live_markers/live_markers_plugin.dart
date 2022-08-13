@@ -1,16 +1,16 @@
-library flutter_map_hemend.live_markers;
+library flutter_map_toolkit.live_markers;
 
 import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/plugin_api.dart';
-import 'package:flutter_map_hemend/src/live_markers/live_markers_controller.dart';
+import 'package:flutter_map_toolkit/src/live_markers/live_markers_controller.dart';
 import 'package:latlong2/latlong.dart';
 
 import 'live_markers_options.dart';
 
-export 'package:flutter_map_hemend/src/core/marker_info.dart';
+export 'package:flutter_map_toolkit/src/core/marker_info.dart';
 
 class LiveMarkerPlugin extends MapPlugin {
   LiveMarkersController? _controller;

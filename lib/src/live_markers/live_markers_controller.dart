@@ -1,12 +1,12 @@
-library flutter_map_hemend.live_markers;
+library flutter_map_toolkit.live_markers;
 
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_map/plugin_api.dart';
-import 'package:flutter_map_hemend/src/core/map_information_request_params.dart';
-import 'package:flutter_map_hemend/src/core/point_info_provider.dart';
+import 'package:flutter_map_toolkit/src/core/map_information_request_params.dart';
+import 'package:flutter_map_toolkit/src/core/point_info_provider.dart';
 
 import '../core/point_info.dart';
 

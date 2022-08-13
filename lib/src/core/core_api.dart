@@ -1,4 +1,4 @@
-library flutter_map_hemend.core_api;
+library flutter_map_toolkit.core_api;
 
 export 'core_methods.dart';
 export 'debouncer.dart';

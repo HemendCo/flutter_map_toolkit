@@ -1,4 +1,4 @@
-library flutter_map_hemend.directions;
+library flutter_map_toolkit.directions;
 // ignore_for_file: implementation_imports
 
 import 'package:flutter/material.dart';

@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter_map/plugin_api.dart';
-import 'package:flutter_map_hemend/src/point_selection/point_selector_options.dart';
+import 'package:flutter_map_toolkit/src/point_selection/point_selector_options.dart';
 
 import '../core/debouncer.dart';
 import '../core/marker_info.dart';

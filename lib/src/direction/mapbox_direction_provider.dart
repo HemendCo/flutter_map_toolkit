@@ -1,8 +1,8 @@
-library flutter_map_hemend.directions.providers;
+library flutter_map_toolkit.directions.providers;
 // ignore_for_file: constant_identifier_names
 
-import 'package:flutter_map_hemend/src/core/type_caster.dart';
-import 'package:flutter_map_hemend/src/direction/direction_provider.dart';
+import 'package:flutter_map_toolkit/src/core/type_caster.dart';
+import 'package:flutter_map_toolkit/src/direction/direction_provider.dart';
 import 'package:latlong2/latlong.dart';
 
 /// details level of the route

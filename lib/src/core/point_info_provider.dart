@@ -1,5 +1,5 @@
-import 'package:flutter_map_hemend/src/core/map_information_request_params.dart';
-import 'package:flutter_map_hemend/src/core/point_info.dart';
+import 'package:flutter_map_toolkit/src/core/map_information_request_params.dart';
+import 'package:flutter_map_toolkit/src/core/point_info.dart';
 
 abstract class PointInfoProvider {
   Future<List<PointInfo>> getPoints([MapInformationRequestParams? params]);

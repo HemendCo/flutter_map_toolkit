@@ -1,4 +1,4 @@
-library flutter_map_hemend.point_selector;
+library flutter_map_toolkit.point_selector;
 
 import 'package:flutter/material.dart' //
     show
@@ -20,11 +20,11 @@ import 'package:latlong2/latlong.dart' //
     show
         LatLng;
 
-import 'package:flutter_map_hemend/src/point_selection/point_selector_controller.dart' //
+import 'package:flutter_map_toolkit/src/point_selection/point_selector_controller.dart' //
     show
         CenterPointSelectorController,
         MapLocatorLayerState;
-import 'package:flutter_map_hemend/src/point_selection/point_selector_options.dart' //
+import 'package:flutter_map_toolkit/src/point_selection/point_selector_options.dart' //
     show
         CenterPointSelectorOptions,
         PointSelectorOptions;

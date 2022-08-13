@@ -13,6 +13,13 @@ import 'package:flutter_map_toolkit/src/core/core_methods.dart';
 class MapInformationRequestParams {
   final LatLngBounds viewPort;
   final LatLng center;
+
+  /// body of a post request to the server
+  ///
+  /// [viewPort] is the current viewport of the map in the form of a [LatLngBounds]
+  /// - this is used to get only needed information from the server
+  ///
+  /// [center] is calculated from view port if not provided
   MapInformationRequestParams({
     required this.viewPort,
     LatLng? center,

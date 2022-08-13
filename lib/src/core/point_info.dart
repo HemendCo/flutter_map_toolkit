@@ -7,6 +7,12 @@ class PointInfo {
   final double rotation;
   final LatLng position;
   final String? iconId;
+
+  /// info of the marker point containing the following parameters:
+  /// rotation - rotation of the marker in radians
+  /// position - [LatLng]position of the marker
+  /// iconId - id of the marker icon (must be provided to plugin - some plugins
+  /// do not support icons and will ignore this parameter)
   PointInfo({
     required this.rotation,
     required this.position,

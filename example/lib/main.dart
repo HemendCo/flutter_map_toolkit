@@ -68,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
       if (event.point != null) {
         _points.add(event.point!);
         setState(() {
-          distanceInfo = directionController.lastPoints?.distanceToPoint(
+          distanceInfo = directionController.lastPath?.distanceToPoint(
             event.point!,
           );
         });

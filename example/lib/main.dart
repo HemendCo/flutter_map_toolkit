@@ -168,7 +168,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       view: (context) => SizedBox(),
                     ),
                     removeOnTap: true,
-                    mapPointLink: _mapEventTap,
+                    mapEventLink: _mapEventTap,
                   ),
 
                   /// draw selected points on map

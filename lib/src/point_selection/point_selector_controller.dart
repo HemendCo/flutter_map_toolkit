@@ -5,28 +5,48 @@ import 'package:flutter_map_toolkit/src/point_selection/point_selector_options.d
 import '../core/debouncer.dart';
 import '../core/marker_info.dart';
 
-/// [updatePoint] is stream of map changes
+/// [updateStream] is stream of map changes
 ///
 /// [options] is settings of controller and view
 ///
 /// [mapState] is used to get center of the map
 class CenterPointSelectorController extends Cubit<MapLocatorLayerState> {
-  final Stream<void> updatePoint;
+  /// stream of map changes
+  final Stream<void> updateStream;
+
+  /// settings of controller and view
   final CenterPointSelectorOptions options;
+
+  /// used to get bounds of the map
   final MapState mapState;
 
+  /// [updateStream] is stream of map changes
+  ///
+  /// [options] is settings of controller and view
+  ///
+  /// [mapState] is used to get center of the map
   CenterPointSelectorController(
-    this.updatePoint,
+    this.updateStream,
     this.options,
     this.mapState,
   ) : super(
           MapLocatorLayerState(options.selectedIcon),
         ) {
-    updatePoint.listen(
+    updateStream.listen(
       (_) {
+        options.onPointSelected(
+          PointSelectionEvent(
+            state: PointSelectionState.none,
+          ),
+        );
         emit(MapLocatorLayerState(options.floatingIcon));
         Debounce.debounce('MapSelector', options.selectionDelay, () {
-          options.onPointSelected(mapState.center);
+          options.onPointSelected(
+            PointSelectionEvent(
+              state: PointSelectionState.select,
+              point: mapState.center,
+            ),
+          );
           emit(MapLocatorLayerState(options.selectedIcon));
         });
       },
@@ -35,7 +55,7 @@ class CenterPointSelectorController extends Cubit<MapLocatorLayerState> {
 }
 
 class MapLocatorLayerState {
+  /// marker view options
   final MarkerInfo view;
-
   MapLocatorLayerState(this.view);
 }

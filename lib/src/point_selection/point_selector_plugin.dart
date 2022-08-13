@@ -44,6 +44,16 @@ import '../../flutter_map_toolkit.dart' //
 /// [CenterPointSelectorOptions] makes it possible for user to select the point
 /// without tapping on the map it will be center of the viewport.
 class PointSelectorPlugin extends MapPlugin {
+  /// A plugin that allows the user to select a point on the map.
+  ///
+  /// behavior of the plugin is defined by the [LayerOptions] params.
+  ///
+  /// [PointSelectorOptions] makes it possible for user to tap on the map and
+  /// select a point.
+  ///
+  /// [CenterPointSelectorOptions] makes it possible for user to select the point
+  /// without tapping on the map it will be center of the viewport.
+  PointSelectorPlugin();
   @override
   Widget createLayer(
     LayerOptions options,
@@ -72,15 +82,15 @@ class PointSelectorPlugin extends MapPlugin {
     );
   }
 
-  PointSelectorHandler? handler;
+  _PointSelectorHandler? handler;
   Widget _pointSelectorView(PointSelectorOptions options) {
     handler = handler ??
-        PointSelectorHandler(
-          tapEvents: options.mapPointLink.stream,
+        _PointSelectorHandler(
+          tapEvents: options.mapEventLink.stream,
           listener: options.onPointSelected,
         );
 
-    return BlocBuilder<PointSelectorHandler, PointSelectionEvent?>(
+    return BlocBuilder<_PointSelectorHandler, PointSelectionEvent?>(
       bloc: handler,
       builder: (context, state) {
         if (state == null) {
@@ -122,8 +132,8 @@ class PointSelectorPlugin extends MapPlugin {
   }
 }
 
-class PointSelectorHandler extends Cubit<PointSelectionEvent?> {
-  PointSelectorHandler({
+class _PointSelectorHandler extends Cubit<PointSelectionEvent?> {
+  _PointSelectorHandler({
     required this.tapEvents,
     required this.listener,
   }) : super(null) {

@@ -85,6 +85,8 @@ and can be controlled with a `DirectionsLayerController`
 
 **this plugin comes with a `MapboxDirectionProvider`**
 
+>- this will use mapbox api to get directions for given waypoints
+
 ```Dart
 DirectionsLayerOptions(
   provider: mapboxProvider,

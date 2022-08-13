@@ -1,7 +1,7 @@
 name: flutter_map_toolkit
 description: A package on top of `flutter_map[https://pub.dev/packages/flutter_map]` containing some useful plugins
 version: 0.0.1
-homepage: "hemend.com"
+homepage: "https://hemend.com"
 
 environment:
   sdk: ">=2.17.6 <3.0.0"

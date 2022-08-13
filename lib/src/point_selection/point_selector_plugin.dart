@@ -27,7 +27,7 @@ import 'package:flutter_map_toolkit/src/point_selection/point_selector_controlle
         CenterPointSelectorController,
         MapLocatorLayerState;
 
-import '../../flutter_map_hemend.dart' //
+import '../../flutter_map_toolkit.dart' //
     show
         CenterPointSelectorOptions,
         PointSelectionEvent,

@@ -10,3 +10,4 @@ export 'map_tap_event_handler.dart';
 export 'point_info.dart';
 export 'point_info_provider.dart';
 export 'type_caster.dart';
+export 'combination.dart';

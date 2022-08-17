@@ -94,6 +94,7 @@ class LiveMarkersControllerWithRefreshRate //
     final state = await _fetchData(
       MapInformationRequestParams(
         viewPort: mapData.bounds(),
+        zoom: mapData.zoom(),
       ),
     );
     emit(state);
@@ -158,6 +159,7 @@ class LiveMarkersControllerWithStream extends Cubit<MultiMarkerLayerState> //
       mapData.stream.map(
         (event) => MapInformationRequestParams(
           viewPort: mapData.bounds(),
+          zoom: mapData.zoom(),
         ),
       ),
     )
@@ -175,19 +177,22 @@ class LiveMarkersControllerWithStream extends Cubit<MultiMarkerLayerState> //
 
 class MultiMarkerControllerInfo {
   final LatLngBounds Function() bounds;
-
-  const MultiMarkerControllerInfo(
-    this.bounds,
-  );
+  final double Function() zoom;
+  const MultiMarkerControllerInfo({
+    required this.bounds,
+    required this.zoom,
+  });
 }
 
 class MultiMarkerControllerInfoWithStream {
   final LatLngBounds Function() bounds;
+  final double Function() zoom;
   final Stream<void> stream;
-  const MultiMarkerControllerInfoWithStream(
-    this.bounds,
-    this.stream,
-  );
+  const MultiMarkerControllerInfoWithStream({
+    required this.bounds,
+    required this.stream,
+    required this.zoom,
+  });
 }
 
 class MultiMarkerLayerState {

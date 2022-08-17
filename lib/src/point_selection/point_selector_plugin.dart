@@ -30,6 +30,7 @@ import 'package:flutter_map_toolkit/src/point_selection/point_selector_controlle
 import '../../flutter_map_toolkit.dart' //
     show
         CenterPointSelectorOptions,
+        PointInfo,
         PointSelectionEvent,
         PointSelectionState,
         PointSelectorOptions;
@@ -77,21 +78,26 @@ class PointSelectorPlugin extends MapPlugin {
     return BlocBuilder<CenterPointSelectorController, MapLocatorLayerState>(
       bloc: CenterPointSelectorController(stream, options, mapState),
       builder: (context, state) {
-        return Center(child: state.view.view(context));
+        final point = PointInfo(
+          rotation: 0,
+          position: mapState.center,
+          iconId: null,
+        );
+        return Center(child: state.view.view(context, point));
       },
     );
   }
 
-  _PointSelectorHandler? handler;
+  _PointSelectorHandler? _handler;
   Widget _pointSelectorView(PointSelectorOptions options) {
-    handler = handler ??
+    _handler = _handler ??
         _PointSelectorHandler(
           tapEvents: options.mapEventLink.stream,
           listener: options.onPointSelected,
         );
 
     return BlocBuilder<_PointSelectorHandler, PointSelectionEvent?>(
-      bloc: handler,
+      bloc: _handler,
       builder: (context, state) {
         if (state == null) {
           return const SizedBox();
@@ -108,7 +114,7 @@ class PointSelectorPlugin extends MapPlugin {
                 builder: (context) => GestureDetector(
                   onTap: options.removeOnTap
                       ? () {
-                          handler?.set(
+                          _handler?.set(
                             PointSelectionEvent(
                               state: PointSelectionState.remove,
                               point: state.point,
@@ -116,7 +122,8 @@ class PointSelectorPlugin extends MapPlugin {
                           );
                         }
                       : null,
-                  child: options.marker.view(context),
+                  child: options.marker
+                      .view(context, PointInfo(iconId: null, position: state.point ?? LatLng(0, 0), rotation: 0)),
                 ),
               ),
           ],

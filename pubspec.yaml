@@ -13,7 +13,7 @@ dependencies:
   flutter_map: ">=2.2.0"
   bloc: ">=8.1.0"
   latlong2: ">=0.8.1"
-  flutter_bloc: ">=8.0.1"
+  flutter_bloc: ">=8.1.1"
 
 dev_dependencies:
   flutter_test:

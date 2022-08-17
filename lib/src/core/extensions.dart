@@ -62,13 +62,13 @@ extension LatLngListTools<T extends LatLng> on List<T> {
           .map(
         (coordinate) => DistanceInfo(
           destination: point,
-          dist: coordinate.calculateDistanceTo(point),
+          distance: coordinate.calculateDistanceTo(point),
           source: coordinate,
         ),
       )
           .reduce(
         ((a, b) {
-          return b.dist < a.dist ? b : a;
+          return b.distance < a.distance ? b : a;
         }),
       );
       return shortestDistance;

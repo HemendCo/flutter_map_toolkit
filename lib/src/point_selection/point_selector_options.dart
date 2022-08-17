@@ -103,11 +103,11 @@ class CenterPointSelectorOptions extends LayerOptions {
     super.rebuild,
   })  : selectedIcon = selectedIcon ??
             MarkerInfo(
-              view: (_) => const Icon(Icons.gps_fixed),
+              view: (_, __) => const Icon(Icons.gps_fixed),
             ),
         floatingIcon = selectedIcon ??
             MarkerInfo(
-              view: (_) => const Icon(Icons.gps_not_fixed),
+              view: (_, __) => const Icon(Icons.gps_not_fixed),
             );
 }
 

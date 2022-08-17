@@ -27,7 +27,8 @@ class LiveMarkerPlugin extends MapPlugin {
         pointInfoProvider: options.pointsInfoProvider,
         refreshRate: options.initialRefreshRate,
         mapData: MultiMarkerControllerInfo(
-          () => mapState.bounds,
+          bounds: () => mapState.bounds,
+          zoom: () => mapState.zoom,
         ),
       );
       return BlocBuilder<LiveMarkersController, MultiMarkerLayerState>(
@@ -48,7 +49,7 @@ class LiveMarkerPlugin extends MapPlugin {
                             turns: e.rotation / pi,
                             alignment: Alignment.center,
                             // origin: Offset.zero,
-                            child: marker.view(context),
+                            child: marker.view(context, e),
                           ),
                         ),
                         point: e.position,
@@ -65,8 +66,9 @@ class LiveMarkerPlugin extends MapPlugin {
       _controller ??= LiveMarkersControllerWithStream(
         pointInfoProvider: options.pointsInfoProvider,
         mapData: MultiMarkerControllerInfoWithStream(
-          () => mapState.bounds,
-          stream,
+          bounds: () => mapState.bounds,
+          zoom: () => mapState.zoom,
+          stream: stream,
         ),
       );
 
@@ -89,7 +91,7 @@ class LiveMarkerPlugin extends MapPlugin {
                             duration: const Duration(milliseconds: 500),
                             turns: e.rotation / pi,
                             alignment: Alignment.center,
-                            child: marker.view(context),
+                            child: marker.view(context, e),
                           ),
                         ),
                         point: e.position,

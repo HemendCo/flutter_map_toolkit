@@ -13,6 +13,7 @@ import 'package:flutter_map_toolkit/src/core/core_methods.dart';
 class MapInformationRequestParams {
   final LatLngBounds viewPort;
   final LatLng center;
+  final double zoom;
 
   /// body of a post request to the server
   ///
@@ -23,6 +24,7 @@ class MapInformationRequestParams {
   MapInformationRequestParams({
     required this.viewPort,
     LatLng? center,
+    required this.zoom,
   }) : center = center ?? viewPort.center;
 
   MapInformationRequestParams copyWith({
@@ -33,6 +35,7 @@ class MapInformationRequestParams {
     return MapInformationRequestParams(
       viewPort: viewPort ?? this.viewPort,
       center: center ?? this.center,
+      zoom: zoom ?? this.zoom,
     );
   }
 
@@ -52,6 +55,7 @@ class MapInformationRequestParams {
         'lat': center.latitude,
         'long': center.longitude,
       },
+      'zoom': zoom,
     };
   }
 
@@ -63,6 +67,7 @@ class MapInformationRequestParams {
     );
     return MapInformationRequestParams(
       viewPort: bounds,
+      zoom: asType(map['zoom']),
       center: pointFromMap(
         asType(
           map['center'],

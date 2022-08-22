@@ -7,6 +7,7 @@ class PointInfo {
   final double rotation;
   final LatLng position;
   final String? iconId;
+  final Map<String, dynamic> metaData;
 
   /// info of the marker point containing the following parameters:
   /// rotation - rotation of the marker in radians
@@ -17,6 +18,7 @@ class PointInfo {
     required this.rotation,
     required this.position,
     required this.iconId,
+    required this.metaData,
   });
 
   Map<String, dynamic> toMap() {
@@ -27,6 +29,7 @@ class PointInfo {
         'long': position.longitude,
       },
       'iconId': iconId,
+      'metaData': metaData,
     };
   }
 
@@ -38,6 +41,7 @@ class PointInfo {
       ),
       position: pointFromMap(asType(map['position'])),
       iconId: asType(map['iconId']),
+      metaData: asType(map['metaData']),
     );
   }
 }

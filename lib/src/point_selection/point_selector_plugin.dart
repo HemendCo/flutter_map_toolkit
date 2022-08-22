@@ -82,6 +82,7 @@ class PointSelectorPlugin extends MapPlugin {
           rotation: 0,
           position: mapState.center,
           iconId: null,
+          metaData: {},
         );
         return Center(child: state.view.view(context, point));
       },
@@ -122,8 +123,15 @@ class PointSelectorPlugin extends MapPlugin {
                           );
                         }
                       : null,
-                  child: options.marker
-                      .view(context, PointInfo(iconId: null, position: state.point ?? LatLng(0, 0), rotation: 0)),
+                  child: options.marker.view(
+                    context,
+                    PointInfo(
+                      iconId: null,
+                      position: state.point ?? LatLng(0, 0),
+                      rotation: 0,
+                      metaData: {},
+                    ),
+                  ),
                 ),
               ),
           ],

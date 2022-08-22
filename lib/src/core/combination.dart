@@ -11,6 +11,10 @@ class Combination<T> {
     return false;
   }
 
+  bool contains(T other) {
+    return left == other || right == other;
+  }
+
   @override
   int get hashCode => (left.hashCode + right.hashCode).hashCode;
 }

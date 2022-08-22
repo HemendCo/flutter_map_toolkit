@@ -66,7 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void onPointSelect(PointSelectionEvent event) {
     if (event.state == PointSelectionState.select) {
       if (event.point != null) {
-        _points.add(event.point!);
+        // _points.add(event.point!);
         setState(() {
           distanceInfo = directionController.lastPath?.distanceToPoint(
             event.point!,
@@ -151,37 +151,37 @@ class _MyHomePageState extends State<MyHomePage> {
                   ],
 
                   /// direction layer for showing the route between selected points
-                  DirectionsLayerOptions(
-                    provider: directionProvider,
-                    useCachedRoute: true,
-                    controller: directionController,
-                    loadingBuilder: (context) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    },
-                  ),
+                  // DirectionsLayerOptions(
+                  //   provider: directionProvider,
+                  //   useCachedRoute: true,
+                  //   controller: directionController,
+                  //   loadingBuilder: (context) {
+                  //     return const Center(
+                  //       child: CircularProgressIndicator(),
+                  //     );
+                  //   },
+                  // ),
 
                   PointSelectorOptions(
                     onPointSelected: onPointSelect,
                     marker: MarkerInfo(
-                      view: (context) => SizedBox(),
+                      view: (context, __) => SizedBox(),
                     ),
                     removeOnTap: true,
                     mapEventLink: _mapEventTap,
                   ),
 
                   /// draw selected points on map
-                  // LiveMarkerOptionsWithStream(
-                  //   pointsInfoProvider: pointProvider,
-                  //   markers: {
-                  //     'm0': MarkerInfo(
-                  //         view: (_) => Icon(
-                  //               Icons.gpp_good_sharp,
-                  //               color: Colors.black.withOpacity(0.2),
-                  //             )),
-                  //   },
-                  // ),
+                  LiveMarkerOptionsWithStream(
+                    pointsInfoProvider: pointProvider,
+                    markers: {
+                      'm0': MarkerInfo(
+                          view: (_, __) => Icon(
+                                Icons.gpp_good_sharp,
+                                color: Colors.black.withOpacity(0.2),
+                              )),
+                    },
+                  ),
                 ],
               ),
             ),
@@ -212,6 +212,7 @@ class SamplePointsEventCubit extends Cubit<List<PointInfo>> {
         rotation: 0,
         position: e,
         iconId: iconIds.random,
+        metaData: {},
       ),
     );
   }
